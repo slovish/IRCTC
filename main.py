@@ -2,7 +2,7 @@ from fastapi import Depends, FastAPI, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from database import  userBase, userDbEngine, userDbSessionLocal
-from modals import User, Train, Booking
+from modals import User, Train
 from typing import Annotated
 from uvicorn import run
 
@@ -10,14 +10,15 @@ from uvicorn import run
 app = FastAPI()
 
 
-
 class Userbase(BaseModel):
+    user_id : int
     username: str
     password: str
     email: str
     role: str
 
 class Trainbase(BaseModel):
+    train_id : int
     train_name: str
     source: str
     destination: str
@@ -25,10 +26,10 @@ class Trainbase(BaseModel):
     arrival_time_at_source: str
     arrival_time_at_destination: str
 
-class Bookingbase(BaseModel):
-    user_id: str
-    train_id: str
-    seats_booked: int
+# class Bookingbase(BaseModel):
+#     user_id: str
+#     train_id: str
+#     seats_booked: int
 
 
 
@@ -54,6 +55,7 @@ user_db_dependency = Annotated[Session, Depends(get_user_db())]
 
 @app.post("/api/signup")
 def signup(user: Userbase, db:user_db_dependency):
+    user = dict(user)
     u = User(username=user.username, password=user.password, email=user.email, role=user.role)
     db.add(u)
     db.commit()

@@ -22,9 +22,9 @@ class Train(userBase):
     arrival_time_at_destination = Column(String(10))
 
 
-class Booking(userBase):
-    __tablename__ = "bookings"
-    booking_id = Column(Integer, primary_key=True)
-    user_id = Column(String(10))
-    train_id = Column(String(10))
-    seats_booked = Column(Integer)
+# class Booking(userBase):
+#     __tablename__ = "bookings"
+#     booking_id = Column(Integer, primary_key=True)
+#     user_id = Column(String(10))
+#     train_id = Column(String(10))
+#     seats_booked = Column(Integer)
